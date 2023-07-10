@@ -44,7 +44,19 @@ const signUp = async (req, res) => {
   }
 };
 
-const signOut = async (req, res) => {};
+const signOut = async (req, res) => {
+  const userId = res.locals.userId;
+
+  try {
+    await db.collection("sessions").deleteOne({
+      userId,
+    });
+
+    res.status(200).send("Usuário deslogado com sucesso");
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
 
 const editUser = async (req, res) => {};
 
